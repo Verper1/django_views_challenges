@@ -9,6 +9,6 @@ from django.http import HttpResponse
 """
 
 
-def welcome_user_view(request):
-    welcome_message = 'Bye, user'
-    return HttpResponse(welcome_message)
+def welcome_user_view(request) -> HttpResponse:
+    welcome_message = f'Hello, {request.user}!'
+    return HttpResponse(welcome_message)  # [04/Mar/2026 23:45:23] "GET /welcome/ HTTP/1.1" 200 20

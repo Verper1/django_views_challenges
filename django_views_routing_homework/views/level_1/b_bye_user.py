@@ -9,6 +9,6 @@ from django.http import HttpResponse
 """
 
 
-def bye_user_view(request):
-    bye_message = 'Bye, user'
-    return HttpResponse(bye_message)
+def bye_user_view(request) -> HttpResponse:
+    bye_message = f'Bye, {request.user}!'
+    return HttpResponse(bye_message)  # [04/Mar/2026 23:48:35] "GET /bye/ HTTP/1.1" 200 19
