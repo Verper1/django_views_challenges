@@ -8,7 +8,6 @@ from django.http import HttpResponse
     2. Проверьте результат по ссылке тут http://127.0.0.1:8000/welcome/
 """
 
-
 def welcome_user_view(request) -> HttpResponse:
     welcome_message = f'Hello, {request.user}!'
     return HttpResponse(welcome_message)  # [04/Mar/2026 23:45:23] "GET /welcome/ HTTP/1.1" 200 20
