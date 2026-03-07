@@ -13,6 +13,7 @@ from django.http import HttpResponse
 BANNED_USERNAMES = ['red_dev', 'green_bear', 'monster']
 
 
-def is_username_banned_view(request, username: str):
-    # код писать тут
-    return HttpResponse('User not banned')
+def is_username_banned_view(request, username: str) -> HttpResponse:
+    if username in BANNED_USERNAMES:
+        return HttpResponse('User banned')  # [04/Mar/2026 23:52:36] "GET /banned/red_dev/ HTTP/1.1" 200 11
+    return HttpResponse('User not banned')  # [04/Mar/2026 23:52:40] "GET /banned/12/ HTTP/1.1" 200 15

@@ -1,4 +1,5 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponse
+from .utils import get_month_title_by_number
 
 
 """
@@ -13,10 +14,20 @@ from django.http import HttpResponse, HttpResponseNotFound
 """
 
 
-def get_month_title_by_number(month_number: int):
-    pass  # код писать тут
+def get_month_title_view(request, month_number: int) -> HttpResponse | HttpResponseNotFound:
+    """
+    Возвращает http ответ и использует функцию get_month_title_by_number из .utils.py, чтобы понять какой сезон сейчас
+    по числу месяца. Если число не в приделах от 1 до 12,
+    то возвращается пустая строка и здесь уже отправляется ответ 404.
+    """
+    response_func = get_month_title_by_number(month_number)
 
+    if not response_func:
+        return HttpResponseNotFound('Месяца с таким номером не существует')
 
-def get_month_title_view(request, month_number: int):
-    # код писать тут
-    return HttpResponseNotFound('Месяца с таким номером не существует')
+    return HttpResponse(response_func)
+
+    # [05/Mar/2026 00:17:05] "GET /month-title/3/ HTTP/1.1" 200 10
+    # [05/Mar/2026 00:17:11] "GET /month-title/12/ HTTP/1.1" 200 8
+    # Not Found: /month-title/14/
+    # [05/Mar/2026 00:17:43] "GET /month-title/14/ HTTP/1.1" 404 67
