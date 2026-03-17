@@ -13,8 +13,8 @@ from django.http import JsonResponse
 """
 USERNAME_TO_USER_INFO_MAPPER = {
     'red_dev': {'id': 1, 'age': 34},
-    'green_bear': {'id': '2', 'age': 43},
-    'monster': {'id': '3', 'age': 17},
+    'green_bear': {'id': 2, 'age': 43},
+    'monster': {'id': 3, 'age': 17},
 }
 
 
@@ -23,3 +23,5 @@ def get_user_info_by_username_view(request, username: str):
         return JsonResponse(data=USERNAME_TO_USER_INFO_MAPPER[username])
     else:
         return JsonResponse(data={'error': 'There is no user info'}, status=404)
+
+# 'user-info-by-username/<int:username>/' было так, а стало так 'user-info-by-username/<str:username>/'

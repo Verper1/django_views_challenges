@@ -1,4 +1,6 @@
 def get_month_title_by_number(month_number: int) -> str:
+    seasons = ("Зима", "Весна", "Лето", "Осень")[(month_number % 12) // 3]
+
     if month_number in [12, 1, 2]:
         return "Зима"
     elif month_number in [3, 4, 5]:
