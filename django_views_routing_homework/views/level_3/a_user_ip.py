@@ -9,4 +9,7 @@ from django.http import HttpResponse, HttpRequest
 
 
 def show_user_ip_view(request: HttpRequest) -> HttpResponse:
-    pass  # код писать тут
+    return HttpResponse([request.META['REMOTE_ADDR'], "\n", request.META['HTTP_USER_AGENT']])
+
+    # [23/Mar/2026 16:11:07] "GET /me/ip/ HTTP/1.1" 200 9
+    # 127.0.0.1

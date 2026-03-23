@@ -17,9 +17,19 @@
 Для тестирования рекомендую использовать Postman.
 Когда будете писать код, не забывайте о читаемости, поддерживаемости и модульности.
 """
+import json
 
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpRequest, JsonResponse
+from .utils.validate_form_helper import ValidateForm
+from django.views.decorators.http import require_POST
 
 
-def validate_user_data_view(request: HttpRequest) -> HttpResponse:
-    pass  # код писать тут
+@require_POST
+def validate_user_data_view(request: HttpRequest) -> JsonResponse:
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+    form = ValidateForm(data)
+    return JsonResponse(data=form.final_check(), status=200)

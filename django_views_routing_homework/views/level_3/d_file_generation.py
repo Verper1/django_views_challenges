@@ -15,7 +15,30 @@
 """
 
 from django.http import HttpResponse, HttpRequest
+from faker import Faker
+from django.http import FileResponse
+from io import BytesIO
 
 
-def generate_file_with_text_view(request: HttpRequest) -> HttpResponse:
-    pass  # код писать тут
+def generate_file_with_text_view(request: HttpRequest) -> FileResponse | HttpResponse:
+    length = request.GET.get("length")
+
+    try:
+        length = int(length)
+        if length < 5 or length > 500:
+            return HttpResponse(status=403)
+    except (TypeError, ValueError):
+        return HttpResponse(status=403)
+
+    fake = Faker("ru_RU")
+    fake_text = fake.text(max_nb_chars=length)
+
+    buffer = BytesIO()
+    buffer.write(fake_text.encode("utf-8"))
+    buffer.seek(0)
+
+    return FileResponse(
+        buffer,
+        as_attachment=True,
+        filename="generated_text.txt"
+    )
