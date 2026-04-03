@@ -66,7 +66,7 @@ class ValidateVariableMixin:
         return isinstance(age_data, int) and age_data > 0
 
 
-class ValidateForm(MainValidator, ValidateFieldsMixin, ValidateVariableMixin):
+class ValidateForm(ValidateFieldsMixin, ValidateVariableMixin, MainValidator):
     def final_check(self) -> dict[str, bool]:
         """Проверка всего того, что пришло из POST запроса."""
         if not self.check_fields():
